@@ -6,6 +6,9 @@ import React from "react";
 const Home = () => {
   return (
     <div className="flex min-h-screen p-4 rounded-md bg-gray-400">
+      <header>
+        <title>Emotions Detector</title>
+      </header>
       <div className="w-screen bg-white justify-center bg-opacity-50 border-gray-500 flex items-center text-center center rounded-xl m-2 shadow-xl">
         <OutputFile />
       </div>
