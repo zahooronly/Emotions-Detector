@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useRef } from "react";
 import Webcam from "react-webcam";
 import Output from "./Output";
 
@@ -45,9 +45,16 @@ const OutputFile: React.FC = () => {
     setSelectedFile(null);
     setIsWebcamOpen(false);
     setIsOpen(true);
+    if (webcamRef.current) {
+      const video: HTMLVideoElement | null = webcamRef.current.video;
+      if (video) {
+        video.pause();
+        video.srcObject = null;
+      }
+    }
   };
 
-  const webcamRef = React.useRef<Webcam>(null);
+  const webcamRef = useRef<Webcam>(null);
 
   return (
     <div className="relative inline-block text-left">

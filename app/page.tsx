@@ -7,8 +7,6 @@ const Home = () => {
   return (
     <div className="flex min-h-screen p-4 rounded-md bg-gray-400">
       <div className="w-screen bg-white justify-center bg-opacity-50 border-gray-500 flex items-center text-center center rounded-xl m-2 shadow-xl">
-        {/* <h1>Hello large</h1> */}
-        {/* <Output /> */}
         <OutputFile />
       </div>
 
@@ -20,7 +18,7 @@ const Home = () => {
       {/* <h1>Hello</h1> */}
       {/* <Dropdown /> */}
       {/* </div> */}
-      {/* // </div> */}
+      {/* </div> */}
     </div>
   );
 };
