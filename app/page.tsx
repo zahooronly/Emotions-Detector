@@ -9,19 +9,19 @@ const Home = () => {
       <header>
         <title>Emotions Detector</title>
       </header>
-      <div className="w-screen bg-white justify-center bg-opacity-50 border-gray-500 flex items-center text-center center rounded-xl m-2 shadow-xl">
+      <div className="w-screen bg-slate-900 justify-center bg-opacity-50 border-gray-500 flex items-center text-center center rounded-xl m-2 shadow-xl">
         <OutputFile />
       </div>
 
-      {/* <div className="w-screen md:w-1/3 flex flex-col"> */}
-      {/* <div className="h-1/2 bg-white bg-opacity-50 justify-center border-gray-500 flex items-center text-center center rounded-xl m-2 shadow-xl"> */}
-      {/* <h1>Hello</h1> */}
-      {/* </div> */}
-      {/* <div className="h-1/2 bg-white bg-opacity-50 border-gray-500 justify-center flex items-center text-center center rounded-xl m-2 shadow-xl"> */}
-      {/* <h1>Hello</h1> */}
-      {/* <Dropdown /> */}
-      {/* </div> */}
-      {/* </div> */}
+      <div className="w-screen md:w-1/3 flex flex-col">
+        <div className="h-1/2 text-gray-50	 bg-slate-900 bg-opacity-50 justify-center border-gray-500 flex items-center text-center center rounded-xl m-2 shadow-xl">
+          <h1>Hello</h1>
+        </div>
+        <div className="h-1/2 text-gray-50	 bg-slate-900 bg-opacity-50 border-gray-500 justify-center flex items-center text-center center rounded-xl m-2 shadow-xl">
+          <h1>Hello</h1>
+          {/* <Dropdown /> */}
+        </div>
+      </div>
     </div>
   );
 };

@@ -2,13 +2,15 @@
 import React, { useState, ChangeEvent } from "react";
 import Webcam from "react-webcam";
 import Output from "./Output";
+import DropdownMenu from "../Dropdown/DropdownMenu";
+import MediaViewer from "../MediaViewer/MediaViewer";
 
 const OutputFile: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
-  const [videoLink, setVideoLink] = useState("");
-  const [pictureLink, setPictureLink] = useState("");
+  const [videoLink, setVideoLink] = useState<string | null>(null);
+  const [pictureLink, setPictureLink] = useState<string | null>(null);
 
   const handleMenuToggle = () => {
     setIsOpen(!isOpen);
@@ -23,8 +25,8 @@ const OutputFile: React.FC = () => {
       setSelectedFile(file);
       setIsOpen(false);
       setIsWebcamOpen(false);
-      setVideoLink("");
-      setPictureLink("");
+      setVideoLink(null);
+      setPictureLink(null);
     }
   };
 
@@ -39,27 +41,27 @@ const OutputFile: React.FC = () => {
       case "webcam":
         setIsWebcamOpen(true);
         setIsOpen(false);
-        setVideoLink("");
-        setPictureLink("");
+        setVideoLink(null);
+        setPictureLink(null);
         break;
       case "videoLink":
-        const videoUrl = prompt("Enter video link:");
-        if (videoUrl) {
-          setVideoLink(videoUrl);
+        const link = prompt("Enter video link");
+        if (link) {
+          setVideoLink(link);
           setIsOpen(false);
           setIsWebcamOpen(false);
           setSelectedFile(null);
-          setPictureLink("");
+          setPictureLink(null);
         }
         break;
       case "pictureLink":
-        const pictureUrl = prompt("Enter picture link:");
-        if (pictureUrl) {
-          setPictureLink(pictureUrl);
+        const pictureLink = prompt("Enter picture link");
+        if (pictureLink) {
+          setPictureLink(pictureLink);
           setIsOpen(false);
           setIsWebcamOpen(false);
           setSelectedFile(null);
-          setVideoLink("");
+          setVideoLink(null);
         }
         break;
       default:
@@ -70,9 +72,9 @@ const OutputFile: React.FC = () => {
   const handleMediaClose = () => {
     setSelectedFile(null);
     setIsWebcamOpen(false);
-    setVideoLink("");
-    setPictureLink("");
     setIsOpen(true);
+    setVideoLink(null);
+    setPictureLink(null);
   };
 
   const webcamRef = React.useRef<Webcam>(null);
@@ -113,158 +115,15 @@ const OutputFile: React.FC = () => {
           onChange={(e) => handleFileInputChange(e, "video")}
         />
       </div>
-      {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          <div
-            className="py-1"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
-          >
-            <button
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem"
-              onClick={() => handleMenuItemClick("picture")}
-            >
-              Picture
-            </button>
-            <button
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem"
-              onClick={() => handleMenuItemClick("video")}
-            >
-              Video
-            </button>
-            <button
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem"
-              onClick={() => handleMenuItemClick("webcam")}
-            >
-              Open Webcam
-            </button>
-            <button
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem"
-              onClick={() => handleMenuItemClick("videoLink")}
-            >
-              Video Link
-            </button>
-            <button
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem"
-              onClick={() => handleMenuItemClick("pictureLink")}
-            >
-              Picture Link
-            </button>
-          </div>
-        </div>
-      )}
-      {selectedFile && !isWebcamOpen && !videoLink && !pictureLink && (
-        <div className="relative">
-          <button
-            type="button"
-            className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 focus:outline-none"
-            onClick={handleMediaClose}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          <Output file={selectedFile} />
-        </div>
-      )}
-      {isWebcamOpen && (
-        <div className="relative">
-          <button
-            type="button"
-            className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 focus:outline-none"
-            onClick={handleMediaClose}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          <Webcam audio={false} ref={webcamRef} />
-        </div>
-      )}
-      {videoLink && !selectedFile && !isWebcamOpen && !pictureLink && (
-        <div className="relative">
-          <button
-            type="button"
-            className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 focus:outline-none"
-            onClick={handleMediaClose}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          <iframe
-            src={videoLink}
-            width="640"
-            height="360"
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
-        </div>
-      )}
-      {pictureLink && !selectedFile && !isWebcamOpen && !videoLink && (
-        <div className="relative">
-          <button
-            type="button"
-            className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 focus:outline-none"
-            onClick={handleMediaClose}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          <img src={pictureLink} alt="Picture" />
-        </div>
-      )}
+      {isOpen && <DropdownMenu handleMenuItemClick={handleMenuItemClick} />}
+      <MediaViewer
+        handleMediaClose={handleMediaClose}
+        selectedFile={selectedFile}
+        isWebcamOpen={isWebcamOpen}
+        videoLink={videoLink}
+        pictureLink={pictureLink}
+        webcamRef={webcamRef}
+      />
     </div>
   );
 };
