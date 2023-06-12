@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
+import Webcam from "react-webcam";
 import Output from "./Output";
 
 const OutputFile: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isWebcamOpen, setIsWebcamOpen] = useState(false);
 
   const handleMenuToggle = () => {
     setIsOpen(!isOpen);
@@ -18,6 +20,7 @@ const OutputFile: React.FC = () => {
     if (file) {
       setSelectedFile(file);
       setIsOpen(false);
+      setIsWebcamOpen(false);
     }
   };
 
@@ -30,8 +33,8 @@ const OutputFile: React.FC = () => {
         document.getElementById("video-input")?.click();
         break;
       case "webcam":
-        // Open webcam
-        // You can use a library like react-webcam or a custom implementation
+        setIsWebcamOpen(true);
+        setIsOpen(false);
         break;
       default:
         break;
@@ -40,13 +43,16 @@ const OutputFile: React.FC = () => {
 
   const handleMediaClose = () => {
     setSelectedFile(null);
+    setIsWebcamOpen(false);
     setIsOpen(true);
   };
+
+  const webcamRef = React.useRef<Webcam>(null);
 
   return (
     <div className="relative inline-block text-left">
       <div>
-        {!selectedFile && (
+        {!selectedFile && !isWebcamOpen && (
           <button
             type="button"
             className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -111,7 +117,7 @@ const OutputFile: React.FC = () => {
           </div>
         </div>
       )}
-      {selectedFile && (
+      {selectedFile && !isWebcamOpen && (
         <div className="relative">
           <button
             type="button"
@@ -134,6 +140,31 @@ const OutputFile: React.FC = () => {
             </svg>
           </button>
           <Output file={selectedFile} />
+        </div>
+      )}
+      {isWebcamOpen && (
+        <div className="relative">
+          <button
+            type="button"
+            className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 focus:outline-none"
+            onClick={handleMediaClose}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <Webcam audio={false} ref={webcamRef} />
         </div>
       )}
     </div>

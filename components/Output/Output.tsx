@@ -9,7 +9,7 @@ const Output: React.FC<OutputProps> = ({ file }) => {
     <div>
       {file && (
         <>
-          <h2>Selected File:</h2>
+          {/* <h2>Selected File:</h2> */}
           {file.type.includes("image") ? (
             <img src={URL.createObjectURL(file)} alt="Selected File" />
           ) : (
