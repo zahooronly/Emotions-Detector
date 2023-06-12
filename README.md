@@ -1,10 +1,13 @@
-# Weapon Detection with yolov3
-## A machine learning model for weapon detection.
+# Emotions Detector Project
 
-#### Requirements:
-> - OpenCV
-> - numpy
-> - Python version 3.7 (tested)
+This project is an Emotions Detector that uses Tensorflow and OpenCV to analyze facial expressions and classify them into different emotions. It is implemented as a web application and can be easily integrated into a Git repository.
 
+## Installation
 
-> [click here to download weight file](https://drive.google.com/file/d/10uJEsUpQI3EmD98iwrwzbD4e19Ps-LHZ/view?usp=sharing)
+To use the Emotions Detector Project, follow the steps below:
+
+1. Clone the Git repository to your local machine:
+
+```shell
+git clone https://github.com/ZahoorOnly/emotions-detector.git
+```
