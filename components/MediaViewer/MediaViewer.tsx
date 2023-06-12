@@ -2,19 +2,14 @@ import React from "react";
 import Webcam from "react-webcam";
 // import Image from "next/image";
 import Output from "../Output/Output";
+
 interface MediaViewerProps {
   handleMediaClose: () => void;
   selectedFile: File | null;
   isWebcamOpen: boolean;
   videoLink: string | null;
   pictureLink: string | null;
-  webcamRef: React.RefObject<Webcam>;
 }
-// type MediaViewerProps = {
-//   selectedFile: File | null;
-//   pictureLink: string;
-//   webcamRef: RefObject<Webcam>;
-// };
 
 const MediaViewer: React.FC<MediaViewerProps> = ({
   handleMediaClose,
