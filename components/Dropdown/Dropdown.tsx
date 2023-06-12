@@ -2,7 +2,7 @@
 
 import React, { useState, ChangeEvent } from "react";
 
-const Dropdown: React.FC = () => {
+const DropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -129,4 +129,4 @@ const Dropdown: React.FC = () => {
   );
 };
 
-export default Dropdown;
+export default DropdownMenu;

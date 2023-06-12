@@ -1,7 +1,8 @@
+"use client";
 import React, { useState, ChangeEvent } from "react";
 import Output from "./Output";
 
-const DropdownMenu: React.FC = () => {
+const OutputFile: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -15,16 +16,8 @@ const DropdownMenu: React.FC = () => {
   ) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
-      switch (option) {
-        case "picture":
-          setSelectedFile(file);
-          break;
-        case "video":
-          setSelectedFile(file);
-          break;
-        default:
-          break;
-      }
+      setSelectedFile(file);
+      setIsOpen(false);
     }
   };
 
@@ -37,32 +30,40 @@ const DropdownMenu: React.FC = () => {
         document.getElementById("video-input")?.click();
         break;
       case "webcam":
-        window.open("https://dummywebcamurl.com", "_blank");
+        // Open webcam
+        // You can use a library like react-webcam or a custom implementation
         break;
       default:
         break;
     }
   };
 
+  const handleMediaClose = () => {
+    setSelectedFile(null);
+    setIsOpen(true);
+  };
+
   return (
     <div className="relative inline-block text-left">
       <div>
-        <button
-          type="button"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={handleMenuToggle}
-        >
-          Dropdown
-          <svg
-            className="-mr-1 ml-2 h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
+        {!selectedFile && (
+          <button
+            type="button"
+            className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={handleMenuToggle}
           >
-            <path fillRule="evenodd" d="M10 12l-6-6h12l-6 6z" />
-          </svg>
-        </button>
+            Dropdown
+            <svg
+              className="-mr-1 ml-2 h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path fillRule="evenodd" d="M10 12l-6-6h12l-6 6z" />
+            </svg>
+          </button>
+        )}
         <input
           type="file"
           id="picture-input"
@@ -110,9 +111,33 @@ const DropdownMenu: React.FC = () => {
           </div>
         </div>
       )}
-      <Output file={selectedFile} />
+      {selectedFile && (
+        <div className="relative">
+          <button
+            type="button"
+            className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 focus:outline-none"
+            onClick={handleMediaClose}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <Output file={selectedFile} />
+        </div>
+      )}
     </div>
   );
 };
 
-export default DropdownMenu;
+export default OutputFile;
